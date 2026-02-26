@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #353a75;
+}
+
+li {
+  float: left;
+}
+
+a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  background-color: #d4d0d0;
+  color: black;
+  cursor: pointer;
+}
+
+main {
+  padding: 16px;
+}
+
+/* bioData code */
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.btn {
+  margin-top: 15px;
+}
+
+.emailInput {
+  margin-top: 10px;
+}
+
+.messageInput {
+  margin-top: 10px;
+}
+
+
+.skillsetBlock {
+  margin-bottom: 15rem;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgb(81, 95, 194);
+  color: white;
+  text-align: center;
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+}
+
+.biodata-title {
+  margin: 0;
+  line-height: 1.2;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  flex: 1 1 auto;
+}
+
+.profile-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 420px) {
+  .panel-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .profile-image {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.videoPlayer {
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10em;
+}
+
+.donut-wrap {
+  max-width: 380px;
+  margin: 16px auto;
+}
+.legend {
+  max-width: 460px;
+  margin: 8px auto 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 16px;
+  font:
+    14px/1.4 Arial,
+    sans-serif;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sw {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.t {
+  font-weight: 600;
+}
+.v {
+  margin-left: auto;
+  font-weight: 700;
+}
+@media (max-width: 420px) {
+  .legend {
+    grid-template-columns: 1fr;
+  }
+}
