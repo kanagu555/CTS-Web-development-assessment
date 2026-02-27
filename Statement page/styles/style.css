@@ -1,0 +1,27 @@
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #4868a0 0%, #f2f6fc 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.statement-card {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.form-control-sm {
+  min-height: 2.25rem;
+}
+
+.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+@media (max-width: 575.98px) {
+  .statement-card {
+    width: 100%;
+  }
+  .statement-card .btn {
+    flex: 1 1 auto;
+  }
+}
