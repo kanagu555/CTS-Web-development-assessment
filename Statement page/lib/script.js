@@ -262,3 +262,91 @@
     initialLoadData();
     handleEditRow();
 })();
+
+
+
+
+(() => {
+
+    const initAmountGroup = (groupEl) => {
+        if (!groupEl || groupEl.dataset.amountToggleInit === '1') return;
+
+        const creditInput =
+            groupEl.querySelector('#inputCredit') ||
+            groupEl.querySelector('.amount-cell input');
+        const debitInput =
+            groupEl.querySelector('#inputDebit') ||
+            groupEl.querySelectorAll('.amount-cell input')[1];
+
+        if (!creditInput || !debitInput) return;
+
+        const creditCell = creditInput.closest('.amount-cell');
+        const debitCell = debitInput.closest('.amount-cell');
+
+        const showOnly = (which) => {
+            const showCredit = which === 'credit';
+            setVisible(creditInput, showCredit);
+            setVisible(debitInput, !showCredit);
+            groupEl.dataset.active = showCredit ? 'credit' : 'debit';
+        }
+
+        const setVisible = (input, visible) => {
+            input.style.opacity = visible ? '1' : '0';
+            input.style.pointerEvents = visible ? 'auto' : 'none';
+        }
+
+        showOnly('credit');
+
+        if (creditCell) {
+            creditCell.addEventListener('mouseenter', () => showOnly('credit'));
+        }
+        if (debitCell) {
+            debitCell.addEventListener('mouseenter', () => showOnly('debit'));
+        }
+
+        creditInput.addEventListener('focusin', () => showOnly('credit'));
+        debitInput.addEventListener('focusin', () => showOnly('debit'));
+
+        groupEl.addEventListener('mouseleave', () => {
+            if (document.activeElement === debitInput) {
+                showOnly('debit');
+            } else if (document.activeElement === creditInput) {
+                showOnly('credit');
+            } else {
+                showOnly('credit');
+            }
+        });
+
+        const onFocusOut = (e) => {
+            const stillInside = groupEl.contains(e.relatedTarget);
+            if (!stillInside) showOnly('credit');
+        }
+        creditInput.addEventListener('focusout', onFocusOut);
+        debitInput.addEventListener('focusout', onFocusOut);
+
+        groupEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                showOnly('credit');
+                creditInput.focus();
+            }
+        });
+
+        groupEl.dataset.amountToggleInit = '1';
+    }
+
+    const initAllAmountGroups = (root = document) => {
+        const groups = root.querySelectorAll('.amount-group');
+        groups.forEach(initAmountGroup);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => initAllAmountGroups());
+    } else {
+        initAllAmountGroups();
+    }
+
+    window.AmountToggle = {
+        initAll: initAllAmountGroups,
+        initOne: initAmountGroup,
+    };
+})();

@@ -70,28 +70,35 @@
               autocomplete="off"
             />
           </div>
-          <div class="col-6 col-md-2">
-            <input
-              id="inputCredit"
-              type="text"
-              inputmode="decimal"
-              class="form-control form-control-sm text-md-end border-1 border-dark"
-              placeholder="0"
-              aria-label="Credit"
-              autocomplete="off"
-            />
+
+          <div class="col-12 col-md-4">
+            <div class="row g-2 amount-group">
+              <div class="col-6 col-md-4 amount-cell" id="creditCell">
+                <input
+                  id="inputCredit"
+                  type="text"
+                  inputmode="decimal"
+                  class="form-control form-control-sm text-md-end border-1 border-dark editable-input"
+                  placeholder="0"
+                  aria-label="Credit"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="col-6 col-md-4 amount-cell" id="debitCell">
+                <input
+                  id="inputDebit"
+                  type="text"
+                  inputmode="decimal"
+                  class="form-control form-control-sm text-md-end border-1 border-dark editable-input"
+                  placeholder="0"
+                  aria-label="Debit"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
           </div>
-          <div class="col-6 col-md-2">
-            <input
-              id="inputDebit"
-              type="text"
-              inputmode="decimal"
-              class="form-control form-control-sm text-md-end border-1 border-dark"
-              placeholder="0"
-              aria-label="Debit"
-              autocomplete="off"
-            />
-          </div>
+
           <div class="col-12 col-md-1 text-end">
             <button
               id="addBtn"
