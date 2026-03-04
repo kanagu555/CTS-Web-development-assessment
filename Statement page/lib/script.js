@@ -1,4 +1,4 @@
-(() => {
+(async () => {
 
     const form = document.getElementById('entryForm');
     const idInput = document.getElementById('inputId');
@@ -43,17 +43,32 @@
 
 
 
-    const initialLoadData = () => {
+    const initialLoadData = async () => {
+
+        const apiUrl = 'http://localhost:9999/txns'
+
         try {
-            const raw = localStorage.getItem(LOCAL_STORAGE_KEY_NAME);
-            entries = raw ? JSON.parse(raw) : [];
-            if (!Array.isArray(entries)) entries = [];
+
+            // const raw = localStorage.getItem(LOCAL_STORAGE_KEY_NAME);
+
+            const responseData = await fetch(apiUrl)
+
+            if (!responseData.ok) throw new Error(responseData.statusText);
+
+            const data = await responseData.json();
+
+            console.log('data123:', data);
+
+            entries = Array.isArray(data) ? data : [];
+
         } catch {
             entries = [];
         }
+
     };
 
     const handleSave = () => {
+
         localStorage.setItem(LOCAL_STORAGE_KEY_NAME, JSON.stringify(entries));
     };
 
@@ -61,6 +76,9 @@
 
     const handleEditRow = () => {
         entriesContainer.innerHTML = '';
+
+        console.log('entries2:', entries);
+
 
         entries.forEach((e, idx) => {
             const row = document.createElement('div');
@@ -72,7 +90,7 @@
             <input name="edit-id" type="text" class="form-control form-control-sm" value="${e.id || ''}" />
           </div>
           <div class="col-10 col-md-3">
-            <input name="edit-date" type="date" class="form-control form-control-sm" value="${e.date || ''}" />
+            <input name="edit-date" type="date" class="form-control form-control-sm" value="${handleFormateDate(e.date) || ''}" />
           </div>
           <div class="col-12 col-md-3">
             <input name="edit-header" type="text" class="form-control form-control-sm" value="${e.header || ''}" placeholder="Header" />
@@ -259,7 +277,7 @@
     });
 
 
-    initialLoadData();
+    await initialLoadData();
     handleEditRow();
 })();
 
