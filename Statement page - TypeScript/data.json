@@ -1,0 +1,39 @@
+{
+  "txns": [
+    {
+      "id": 1,
+      "header": "Salary",
+      "date": "2026-01-01",
+      "txnType": "CREDIT",
+      "credit": 56000
+    },
+    {
+      "id": 2,
+      "header": "Rent",
+      "date": "2026-01-01",
+      "txnType": "DEBIT",
+      "debit": 6000
+    },
+    {
+      "id": 3,
+      "header": "Fuel",
+      "date": "2026-01-01",
+      "txnType": "DEBIT",
+      "debit": 560
+    },
+    {
+      "id": 4,
+      "header": "Salary",
+      "date": "2026-02-12",
+      "txnType": "CREDIT",
+      "credit": 60000
+    },
+    {
+      "id": 5,
+      "header": "Rent",
+      "date": "2026-02-12",
+      "txnType": "DEBIT",
+      "debit": 7000
+    }
+  ]
+}
