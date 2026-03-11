@@ -1,8 +1,12 @@
+
+
 export interface Txn {
     id: number;
-    header: string;
     txnDate: string;
-    txnType: string;
+    header: string;
+    txnType: 'CREDIT' | 'DEBIT';
     amount: number;
-    isEditable?: boolean;
+    isEditable?: Boolean;
+    data: () => void;
+    resolver: () => void;
 }

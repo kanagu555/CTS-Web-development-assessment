@@ -27,7 +27,6 @@ const TxnsFooter = ({ txnsSummary }: Props) => (
         {txnsSummary.balance}
       </Col>
       <Col xs={2} className="text-center">
-        {/* empty cell */}
       </Col>
     </Row>
   </Fragment>

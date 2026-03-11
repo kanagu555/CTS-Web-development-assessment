@@ -1,6 +1,11 @@
-import { Fragment, useState, type SubmitEvent } from "react";
-import { Form, Row, Col, Button, ButtonGroup } from "react-bootstrap";
 import type { Txn } from "../models/Txn";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { txnSchema } from "../service/txnSchema";
+
+import { Form, Col, Button } from "react-bootstrap";
+
+const todayISO = () => new Date().toISOString().substring(0, 10);
 
 const TxnForm = ({
   t,
@@ -11,30 +16,49 @@ const TxnForm = ({
   save: (txn: Txn) => void;
   cancel?: (id: number) => void;
 }) => {
-  const [txn, setTxn] = useState<Txn>(
-    t
-      ? { ...t }
-      : {
-          id: 0,
-          header: "",
-          txnDate: new Date().toISOString().substring(0, 10),
-          txnType: "CREDIT",
-          amount: 0,
-        },
-  );
-
-  const toggleType = (txnType: string) => {
-    setTxn({ ...txn, txnType });
-  };
-
-  const formSubmitted = (e: SubmitEvent) => {
-    e.preventDefault();
-    save({ ...txn });
-    if (!txn.isEditable) {
-      setTxn({
+  const defaultValues: any = t
+    ? { ...t }
+    : {
         id: 0,
         header: "",
-        txnDate: new Date().toISOString().substring(0, 10),
+        txnDate: todayISO(),
+        txnType: "CREDIT",
+        amount: 0,
+        isEditable: false,
+      };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+    reset,
+  } = useForm<Txn>({
+    defaultValues,
+    resolver: yupResolver(txnSchema),
+    mode: "onBlur",
+  });
+
+  console.log("errors:", errors);
+
+  const txnType = watch("txnType");
+
+  const toggleType = (type: "CREDIT" | "DEBIT") => {
+    setValue("txnType", type, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+  };
+
+  const onSubmit = (data: any) => {
+    save({ ...data });
+
+    if (!data.isEditable) {
+      reset({
+        id: 0,
+        header: "",
+        txnDate: todayISO(),
         txnType: "CREDIT",
         amount: 0,
       });
@@ -43,78 +67,89 @@ const TxnForm = ({
 
   return (
     <Form
-      className="p-1 mb-1 border-bottom border-info"
-      onSubmit={formSubmitted}
+      className="row p-1 mb-1 border-bottom border-info"
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <Row>
-        <Col xs={12} sm={1} className="text-sm-end text-muted small">
-          {txn.id}
-        </Col>
-        <Col sm={2} className="text-center">
+      <Col xs={1} className="text-end">
+        {watch("id")}
+      </Col>
+
+      <Col xs={2} className="text-center">
+        <Form.Control
+          type="date"
+          size="sm"
+          {...register("txnDate")}
+          className={errors.txnDate ? "bg-danger" : ""}
+          title={errors.txnDate?.message ?? ""}
+        />
+      </Col>
+
+      <Col>
+        <Form.Control
+          type="text"
+          placeholder="Description"
+          size="sm"
+          {...register("header")}
+          className={errors.header ? "bg-danger" : ""}
+          title={errors.header?.message ?? ""}
+        />
+      </Col>
+
+      <Col
+        xs={2}
+        className="text-end"
+        onClick={() => toggleType("CREDIT")}
+        role="button"
+        title="Set as CREDIT"
+      >
+        {txnType === "CREDIT" && (
           <Form.Control
-            className="form-control"
-            type="date"
-            value={txn.txnDate}
-            onChange={(e) => setTxn({ ...txn, txnDate: e.target.value })}
+            type="number"
+            size="sm"
+            inputMode="decimal"
+            {...register("amount", { valueAsNumber: true })}
+            className={errors.amount ? "bg-danger text-end" : "text-end"}
+            title={errors.amount?.message ?? ""}
           />
-        </Col>
-        <Col sm={2}>
+        )}
+      </Col>
+
+      <Col
+        xs={2}
+        className="text-end"
+        onClick={() => toggleType("DEBIT")}
+        role="button"
+        title="Set as DEBIT"
+      >
+        {txnType === "DEBIT" && (
           <Form.Control
-            className="form-control"
-            type="text"
-            value={txn.header}
-            onChange={(e) => setTxn({ ...txn, header: e.target.value })}
+            type="number"
+            size="sm"
+            inputMode="decimal"
+            {...register("amount", { valueAsNumber: true })}
+            className={errors.amount ? "bg-danger text-end" : "text-end"}
+            title={errors.amount?.message ?? ""}
           />
-        </Col>
-        <Col sm={2} className="text-end" onClick={(_e) => toggleType("CREDIT")}>
-          {txn.txnType === "CREDIT" && (
-            <Form.Control
-              className="form-control"
-              type="number"
-              value={txn.amount}
-              onChange={(e) =>
-                setTxn({ ...txn, amount: Number(e.target.value) })
-              }
-            />
-          )}
-        </Col>
-        <Col sm={2} className="text-end" onClick={(_e) => toggleType("DEBIT")}>
-          {txn.txnType === "DEBIT" && (
-            <Form.Control
-              className="form-control"
-              type="number"
-              value={txn.amount}
-              onChange={(e) =>
-                setTxn({ ...txn, amount: Number(e.target.value) })
-              }
-            />
-          )}
-        </Col>
-        <Col sm={2} className="text-center">
-          {txn.isEditable ? (
-            <Fragment>
-              <ButtonGroup>
-                <Button className="btn btn-sm btn-primary">
-                  <i className="bi bi-floppy" />
-                </Button>
-                <Button
-                  className="btn btn-sm btn-danger ms-1"
-                  type="button"
-                  onClick={(_e) => cancel && cancel(txn.id)}
-                >
-                  <i className="bi bi-x-circle" />
-                </Button>
-              </ButtonGroup>
-            </Fragment>
-          ) : (
-            <ButtonGroup>
-              <Button className="btn btn-sm btn-primary">
-                <i className="bi bi-floppy" />
-              </Button>
-            </ButtonGroup>
-          )}
-        </Col>
-      </Row>
+        )}
+      </Col>
+
+      <Col xs={2} className="text-center">
+        <Button type="submit" size="sm" variant="primary">
+          <i className="bi bi-floppy" />
+        </Button>
+
+        {watch("isEditable") && (
+          <Button
+            size="sm"
+            variant="danger"
+            className="ms-1"
+            type="button"
+            onClick={() => cancel?.(watch("id"))}
+          >
+            <i className="bi bi-x-circle" />
+          </Button>
+        )}
+      </Col>
     </Form>
   );
 };
