@@ -75,7 +75,7 @@ export const txnSlice = createSlice({
 
                 state.summary.balance = state.summary.totalCredit - state.summary.totalDebit
 
-                state.list[idx].isEditable = false;
+                state.list[idx].isEditable = undefined;
 
             }
             // update tranasction summary - todo
@@ -113,7 +113,7 @@ export const txnSlice = createSlice({
         cancelTxn: (state, action: PayloadAction<number>) => {
             const index = state.list.findIndex(item => item.id === action.payload);
             if (index > -1) {
-                state.list[index].isEditable = false;
+                state.list[index].isEditable = undefined;
             }
         }
     },
