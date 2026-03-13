@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@reduxjs/toolkit": "^2.11.2",
     "axios": "^1.13.6",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
@@ -20,6 +21,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.71.2",
+    "react-redux": "^9.2.0",
     "yup": "^1.7.1"
   },
   "devDependencies": {

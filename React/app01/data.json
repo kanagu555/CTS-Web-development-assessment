@@ -72,6 +72,30 @@
       "txnType": "CREDIT",
       "amount": 300,
       "isEditable": false
+    },
+    {
+      "id": 0,
+      "header": "sdsdsd",
+      "txnDate": "2026-03-12",
+      "txnType": "CREDIT",
+      "amount": 4440,
+      "isEditable": false
+    },
+    {
+      "id": 0,
+      "header": "dfdf",
+      "txnDate": "2026-03-12",
+      "txnType": "CREDIT",
+      "amount": 444,
+      "isEditable": false
+    },
+    {
+      "id": 0,
+      "header": "testing",
+      "txnDate": "2026-03-12",
+      "txnType": "CREDIT",
+      "amount": 200,
+      "isEditable": false
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
