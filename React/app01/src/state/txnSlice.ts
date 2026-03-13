@@ -61,7 +61,7 @@ export const txnSlice = createSlice({
 
                 if (selectedTxn.txnType === 'CREDIT') {
                     state.summary.totalCredit -= selectedTxn.amount
-                } else if (selectedTxn.txnType = 'DEBIT') {
+                } else if (selectedTxn.txnType === 'DEBIT') {
                     state.summary.totalDebit -= selectedTxn.amount
                 }
 

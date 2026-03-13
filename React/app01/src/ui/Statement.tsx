@@ -84,8 +84,8 @@ const Statement = () => {
   };
 
   const remove = (id: number) => {
-    console.log('deleteTxn:', id);
-    
+    console.log("deleteTxn:", id);
+
     dispatch(deleteTxn(id));
     // delTxnById(id)
     //   .then((_resp) => setTxns(txns.filter((tx) => tx.id !== id)))
@@ -111,8 +111,7 @@ const Statement = () => {
     // );
   };
 
-  console.log('txns123:', txns);
-  
+  console.log("txns123:", txns);
 
   return (
     <Container className="col-sm-10 m-2 mx-auto p-2">
